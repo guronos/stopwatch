@@ -38,9 +38,7 @@ export default {
     };
   },
   methods: {
-    startStopWatch() {
-      this.timeRun = true;
-      this.interval = setInterval(() => {
+    runTime(){
         if (this.seconds > 59) {
           this.seconds = 0;
           this.minutes += 1;
@@ -51,18 +49,22 @@ export default {
         }
         console.log(this.seconds);
         this.seconds += 1;
-      }, 1000);
+        this.interval = setTimeout(this.runTime, 1000)
+    },
+    startStopWatch() {
+      this.timeRun = true;
+      setTimeout(this.runTime, 1000);
     },
     pauseTime() {
       this.timeRun = false;
-      clearInterval(this.interval);
+      clearTimeout(this.interval);
     },
     stopTime() {
       this.timeRun = false;
       this.seconds = 0;
       this.minutes = 0;
       this.hours = 0;
-      clearInterval(this.interval);
+      clearTimeout(this.interval);
     },
   },
 };
