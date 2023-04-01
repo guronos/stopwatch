@@ -35,25 +35,21 @@ export default {
       seconds: 0,
       timeRun: false,
       interval: null,
+      startTime : '',
     };
   },
-  methods: {
-    runTime(){
-        if (this.seconds > 59) {
-          this.seconds = 0;
-          this.minutes += 1;
-        }
-        if (this.minutes >= 59) {
-          this.minutes = 0;
-          this.hours += 1;
-        }
-        console.log(this.seconds);
-        this.seconds += 1;
-        this.interval = setTimeout(this.runTime, 1000)
-    },
+  methods: {    
     startStopWatch() {
       this.timeRun = true;
-      setTimeout(this.runTime, 1000);
+      this.startTime = Date.now()
+      setTimeout(this.runTime, 0);
+    },
+    runTime(){
+      let pastTense = Math.trunc((Date.now() - this.startTime) / 1000);
+      this.seconds = pastTense % 60
+      this.minutes = Math.trunc(pastTense / 60)
+      this.hours = Math.trunc((pastTense / 60) / 60)
+      this.interval = setTimeout(this.runTime, 0)
     },
     pauseTime() {
       this.timeRun = false;
