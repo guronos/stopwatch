@@ -49,7 +49,7 @@ export default {
       this.seconds = pastTense % 60
       this.minutes = Math.trunc(pastTense / 60)
       this.hours = Math.trunc((pastTense / 60) / 60)
-      this.interval = setTimeout(this.runTime, 0)
+      this.interval = setTimeout(this.runTime, 100)
     },
     pauseTime() {
       this.timeRun = false;
