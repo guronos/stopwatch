@@ -36,31 +36,41 @@ export default {
       timeRun: false,
       interval: null,
       startTime : '',
+      milliseconds : 0,
     };
   },
   methods: {    
     startStopWatch() {
       this.timeRun = true;
       this.startTime = Date.now()
-      setTimeout(this.runTime, 0);
+      if (this.milliseconds) {
+        this.startTime = this.startTime - this.milliseconds
+      }
+      this.interval = setInterval(this.runTime, 100)
     },
     runTime(){
-      let pastTense = Math.trunc((Date.now() - this.startTime) / 1000);
-      this.seconds = pastTense % 60
-      this.minutes = Math.trunc(pastTense / 60)
-      this.hours = Math.trunc((pastTense / 60) / 60)
-      this.interval = setTimeout(this.runTime, 100)
+      this.milliseconds = Date.now() - this.startTime;
+      let pastTense = Math.trunc(this.milliseconds / 1000);
+      this.seconds = pastTense % 60;
+      this.minutes = Math.trunc(pastTense / 60);
+      this.hours = Math.trunc((pastTense / 60) / 60);
+      console.log(this.seconds);
+      
     },
     pauseTime() {
       this.timeRun = false;
-      clearTimeout(this.interval);
+      clearInterval(this.interval);
     },
     stopTime() {
       this.timeRun = false;
+      this.milliseconds = 0;
       this.seconds = 0;
       this.minutes = 0;
       this.hours = 0;
-      clearTimeout(this.interval);
+      this.secondPause = 0;
+      this.minutesPause = 0;
+      this.hoursPause = 0;
+      clearInterval(this.interval);
     },
   },
 };
